@@ -54,6 +54,8 @@ defineOptions({
 const toast = useToast()
 const serverProvider = import.meta.env.VITE_SRCDS_SERVER_PROVIDER ?? '好心人'
 const serverName = import.meta.env.VITE_SRCDS_SERVER_NAME ?? 'Left 4 Dead 2'
+const serverAddr = import.meta.env.VITE_SRCDS_SERVER_ADDRESS ?? 'example.com'
+const serverPort = import.meta.env.VITE_SRCDS_SERVER_PORT ?? '27015'
 const steamConnectLink: Ref<BtnConnectStatus | string> = ref(BtnConnectStatus.RESOLVING)
 
 // 按钮样式
@@ -125,10 +127,7 @@ async function generateSteamBrowserProtocol(address: string, port: string): Prom
  */
 async function refreshSteamConnectLink() {
   try {
-    steamConnectLink.value = await generateSteamBrowserProtocol(
-      import.meta.env.VITE_SRCDS_SERVER_ADDRESS,
-      import.meta.env.VITE_SRCDS_SERVER_PORT,
-    )
+    steamConnectLink.value = await generateSteamBrowserProtocol(serverAddr, serverPort)
   } catch (error) {
     switch (true) {
       case error instanceof DNSError:

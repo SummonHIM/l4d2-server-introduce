@@ -68,9 +68,9 @@ defineOptions({
 })
 
 const toast = useToast()
-const consoleConnectCommand = ref(
-  `connect ${import.meta.env.VITE_SRCDS_SERVER_ADDRESS}:${import.meta.env.VITE_SRCDS_SERVER_PORT}`,
-)
+const serverAddr = import.meta.env.VITE_SRCDS_SERVER_ADDRESS ?? 'example.com'
+const serverPort = import.meta.env.VITE_SRCDS_SERVER_PORT ?? '27015'
+const consoleConnectCommand = ref(`connect ${serverAddr}:${serverPort}`)
 
 // 返回菜单
 const menuItems: GlobalTabbarButtonProps[] = [

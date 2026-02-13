@@ -29,6 +29,15 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 pnpm install
 ```
 
+## Environments
+
+```
+VITE_SRCDS_SERVER_PROVIDER=Somebody    # Server provider name
+VITE_SRCDS_SERVER_NAME=Left 4 Dead 2   # Server name
+VITE_SRCDS_SERVER_ADDRESS=example.com  # Server IP
+VITE_SRCDS_SERVER_PORT=27015           # Server port
+```
+
 ### Compile and Hot-Reload for Development
 
 ```sh
