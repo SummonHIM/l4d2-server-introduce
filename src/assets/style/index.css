@@ -1,0 +1,12 @@
+@import 'tailwindcss';
+@import 'primeicons/primeicons.css';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+code {
+  @apply bg-gray-100 text-red-600 px-1 rounded font-mono;
+}
+
+pre code {
+  @apply bg-gray-900 text-gray-100 p-4 rounded block overflow-x-auto;
+}

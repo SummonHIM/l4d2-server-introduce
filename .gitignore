@@ -38,5 +38,10 @@ __screenshots__/
 # Vite
 *.timestamp-*-*.mjs
 
+.env
+
 test-results/
 playwright-report/
+
+# Editor
+.vscode
