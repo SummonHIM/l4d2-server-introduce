@@ -81,9 +81,6 @@ export const makers = [
   {
     name: '@electron-forge/maker-rpm',
   },
-  {
-    name: '@electron-forge/maker-dmg',
-  },
 ]
 export const publishers = [
   {
