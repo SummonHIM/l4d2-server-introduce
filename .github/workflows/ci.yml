@@ -100,16 +100,17 @@ jobs:
           pnpm build
 
       - name: Build electron application
+        if: ! startsWith(github.ref, 'refs/tags/')
         run: |
           pnpm make
+
+      - name: Build and publish electron application
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          pnpm run publish
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: out-${{ matrix.os }}
           path: out
-
-      - name: Publish release
-        if: startsWith(github.ref, 'refs/tags/')
-        run: |
-          pnpm run publish --from-dry-run
