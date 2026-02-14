@@ -77,9 +77,21 @@ export const makers = [
   },
   {
     name: '@electron-forge/maker-deb',
+    config: {
+      options: {
+        categories: 'Game',
+        icon: 'src/assets/logo/favicon.png',
+      },
+    },
   },
   {
     name: '@electron-forge/maker-rpm',
+    config: {
+      options: {
+        categories: 'Game',
+        icon: 'src/assets/logo/favicon.png',
+      },
+    },
   },
 ]
 export const publishers = [
