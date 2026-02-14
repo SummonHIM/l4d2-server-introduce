@@ -1,6 +1,6 @@
 {
   "name": "l4d2-server-introduce",
-  "productName": "SummonL4D2 Server Launcher",
+  "productName": "SummonL4D2-Server-Launcher",
   "description": "A simple page to quickly connect to SummonHIM's Left 4 Dead 2 server.",
   "version": "0.0.0",
   "repository": "https://github.com/SummonHIM/l4d2-server-introduce",
@@ -33,6 +33,7 @@
     "@primeuix/themes": "^2.0.3",
     "@tailwindcss/vite": "^4.1.18",
     "axios": "^1.13.5",
+    "dotenv": "^17.3.1",
     "electron-context-menu": "^4.1.1",
     "electron-squirrel-startup": "^1.0.1",
     "electron-store": "^11.0.2",

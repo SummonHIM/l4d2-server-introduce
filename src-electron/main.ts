@@ -6,6 +6,11 @@ import electronSquirrelStartup from 'electron-squirrel-startup'
 import Store from 'electron-store'
 import { updateElectronApp } from 'update-electron-app'
 
+// 安装阶段直接退出
+if (electronSquirrelStartup) {
+  app.quit()
+}
+
 const store = new Store<{
   appearance: {
     winWidth: number
@@ -37,8 +42,8 @@ function createWindow(): void {
   const savedAppearance = store.get('appearance')
 
   const win = new BrowserWindow({
-    width: savedAppearance?.winWidth ?? 1280,
-    height: savedAppearance?.winHeight ?? 800,
+    width: savedAppearance?.winWidth ?? 1024,
+    height: savedAppearance?.winHeight ?? 768,
     x: savedAppearance?.winX,
     y: savedAppearance?.winY,
   })
@@ -46,6 +51,26 @@ function createWindow(): void {
   // 右键菜单
   contextMenu({
     showSaveImageAs: true,
+    labels: {
+      learnSpelling: '学习拼写',
+      lookUpSelection: '查找“{selection}”',
+      searchWithGoogle: '使用Google搜索',
+      cut: '剪切',
+      copy: '复制',
+      paste: '粘贴',
+      selectAll: '全选',
+      saveImage: '保存图片',
+      saveImageAs: '图片另存为…',
+      saveVideo: '保存视频',
+      saveVideoAs: '视频另存为…',
+      copyLink: '复制链接',
+      saveLinkAs: '链接另存为…',
+      copyImage: '复制图片',
+      copyImageAddress: '复制图片地址',
+      copyVideoAddress: '复制视频地址',
+      inspect: '检查',
+      services: '服务',
+    },
   })
 
   // 清除工具栏
@@ -83,11 +108,6 @@ function createWindow(): void {
   win.on('close', () => {
     saveBounds(win)
   })
-}
-
-// 安装阶段直接退出
-if (electronSquirrelStartup) {
-  app.quit()
 }
 
 // 启动窗口

@@ -1,16 +1,24 @@
 import { utils } from '@electron-forge/core'
 import { FusesPlugin } from '@electron-forge/plugin-fuses'
 import { FuseV1Options, FuseVersion } from '@electron/fuses'
+import 'dotenv/config'
+
+const currentYear = new Date().getFullYear()
+const serverAddr = process.env.VITE_SRCDS_SERVER_ADDRESS ?? 'example.com'
+const serverProvider = process.env.VITE_SRCDS_SERVER_PROVIDER ?? 'Somebody'
+
+function domainToBundleId(domain: string): string {
+  return domain.split('.').reverse().join('.')
+}
 
 export const packagerConfig = {
   asar: true,
   icon: 'src/assets/logo/favicon',
   appBundleId: utils.fromBuildIdentifier({
-    beta: 'top.summonhim.serenity.l4d2.beta',
-    prod: 'top.summonhim.serenity.l4d2',
+    beta: domainToBundleId(serverAddr) + '.beta',
+    prod: domainToBundleId(serverAddr),
   }),
-  appCopyright:
-    '© 2026 SummonHIM. Left 4 Dead 2 and related assets are trademarks and/or copyrights of Valve Corporation. This project is not affiliated with or endorsed by Valve.',
+  appCopyright: `© ${currentYear} ${serverProvider}. Left 4 Dead 2 and related assets are trademarks and/or copyrights of Valve Corporation. This project is not affiliated with or endorsed by Valve.`,
   ignore: [
     // 只匹配根目录文件夹
     /^\.github($|\/)/,
