@@ -91,6 +91,7 @@ export const makers = [
     name: '@electron-forge/maker-rpm',
     config: {
       options: {
+        bin: executableName,
         categories: ['Game'],
         icon: 'src/assets/logo/favicon.png',
       },
