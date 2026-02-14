@@ -79,7 +79,7 @@ export const makers = [
     name: '@electron-forge/maker-deb',
     config: {
       options: {
-        categories: 'Game',
+        categories: ['Game'],
         icon: 'src/assets/logo/favicon.png',
       },
     },
@@ -88,7 +88,7 @@ export const makers = [
     name: '@electron-forge/maker-rpm',
     config: {
       options: {
-        categories: 'Game',
+        categories: ['Game'],
         icon: 'src/assets/logo/favicon.png',
       },
     },
