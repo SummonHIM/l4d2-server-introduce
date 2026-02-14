@@ -12,52 +12,47 @@ export const packagerConfig = {
   appCopyright:
     '© 2026 SummonHIM. Left 4 Dead 2 and related assets are trademarks and/or copyrights of Valve Corporation. This project is not affiliated with or endorsed by Valve.',
   ignore: [
-    // 文件夹
-    '.github/',
-    '.vscode/',
-    'e2e/',
-    'playwright-report/',
-    'public/',
-    'test-results/',
+    // 只匹配根目录文件夹
+    /^\.github($|\/)/,
+    /^\.vscode($|\/)/,
+    /^public($|\/)/,
+    /^e2e($|\/)/,
+    /^test-results($|\/)/,
+    /^playwright-report($|\/)/,
 
-    // tsconfig 文件
-    'tsconfig.json',
-    'env.d.ts',
-    /tsconfig\..*\.json/,
+    // tsconfig
+    /^tsconfig\.json$/,
+    /^env\.d\.ts$/,
+    /^tsconfig\..*\.json$/,
 
-    // vite 相关配置
-    /vite\.config\..*/,
-    /jsconfig.*/,
-    /vitest\.config.*/,
-    /cypress\.config.*/,
-    /playwright\.config.*/,
-    'components.d.ts',
+    // vite / test config
+    /^vite\.config\..*$/,
+    /^vitest\.config\..*$/,
+    /^cypress\.config\..*$/,
+    /^playwright\.config\..*$/,
+    /^components\.d\.ts$/,
 
-    // package / yarn / lint / prettier 配置
-    'package-lock.json',
-    /pnpm.*/,
-    /\.yarnrc.*/,
-    /yarn.*/,
-    /\.eslint.*/,
-    /eslint.*/,
-    /\.oxlint.*/,
-    /oxlint.*/,
-    /\.oxfmt.*/,
-    /\.prettier.*/,
-    /prettier.*/,
-    /\.editorconfig/,
+    // lock files（仅根目录）
+    /^package-lock\.json$/,
+    /^pnpm-lock\.yaml$/,
+    /^yarn\.lock$/,
 
-    // 环境变量 .env
-    '.env',
-    /\.env\..*/,
+    // lint prettier（仅根目录）
+    /^\.eslint.*$/,
+    /^\.prettier.*$/,
+    /^\.editorconfig$/,
 
-    // Git
-    '.gitattributes',
-    '.gitignore',
-    '.npmrc',
+    // env（仅根目录）
+    /^\.env$/,
+    /^\.env\..*$/,
 
-    // Electron
-    'forge.config.ts',
+    // git（仅根目录）
+    /^\.gitattributes$/,
+    /^\.gitignore$/,
+    /^\.npmrc$/,
+
+    // forge config
+    /^forge\.config\.ts$/,
   ],
 }
 export const rebuildConfig = {}

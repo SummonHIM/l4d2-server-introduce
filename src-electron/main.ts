@@ -1,6 +1,7 @@
 import path from 'path'
 
 import { BrowserWindow, app, shell } from 'electron'
+import contextMenu from 'electron-context-menu'
 import electronSquirrelStartup from 'electron-squirrel-startup'
 import Store from 'electron-store'
 import { updateElectronApp } from 'update-electron-app'
@@ -40,6 +41,11 @@ function createWindow(): void {
     height: savedAppearance?.winHeight ?? 800,
     x: savedAppearance?.winX,
     y: savedAppearance?.winY,
+  })
+
+  // 右键菜单
+  contextMenu({
+    showSaveImageAs: true,
   })
 
   // 清除工具栏

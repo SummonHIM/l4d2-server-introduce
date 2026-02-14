@@ -3,6 +3,7 @@
   "productName": "SummonL4D2 Server Launcher",
   "description": "A simple page to quickly connect to SummonHIM's Left 4 Dead 2 server.",
   "version": "0.0.0",
+  "repository": "https://github.com/SummonHIM/l4d2-server-introduce",
   "author": {
     "email": "summonhim@qq.com",
     "name": "SummonHIM",
@@ -12,7 +13,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:electron": "cross-env NODE_ENV=development concurrently -k \"vite\" \"wait-on http://localhost:5173 && electron-forge start\"",
+    "dev:electron": "cross-env NODE_ENV=development concurrently -k \"vite\" \"wait-on tcp:5173 && electron-forge start\"",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "test:e2e": "playwright test",
@@ -32,6 +33,7 @@
     "@primeuix/themes": "^2.0.3",
     "@tailwindcss/vite": "^4.1.18",
     "axios": "^1.13.5",
+    "electron-context-menu": "^4.1.1",
     "electron-squirrel-startup": "^1.0.1",
     "electron-store": "^11.0.2",
     "pinia": "^3.0.4",
