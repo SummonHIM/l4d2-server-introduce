@@ -71,6 +71,7 @@ export const makers = [
   {
     name: '@electron-forge/maker-squirrel',
     config: {
+      name: pkgName,
       setupIcon: 'src/assets/logo/favicon.ico',
     },
   },
