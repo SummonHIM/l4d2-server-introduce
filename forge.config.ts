@@ -6,7 +6,7 @@ import 'dotenv/config'
 const currentYear = new Date().getFullYear()
 const serverAddr = process.env.VITE_SRCDS_SERVER_ADDRESS ?? 'example.com'
 const serverProvider = process.env.VITE_SRCDS_SERVER_PROVIDER ?? 'Somebody'
-const executableName =
+const pkgName =
   serverProvider == 'SummonHIM' ? 'summonl4d2-server-launcher' : 'l4d2-server-introduce'
 
 function domainToBundleId(domain: string): string {
@@ -15,7 +15,7 @@ function domainToBundleId(domain: string): string {
 
 export const packagerConfig = {
   asar: true,
-  executableName: executableName,
+  executableName: pkgName,
   icon: 'src/assets/logo/favicon',
   appBundleId: utils.fromBuildIdentifier({
     beta: domainToBundleId(serverAddr) + '.beta',
@@ -81,7 +81,8 @@ export const makers = [
     name: '@electron-forge/maker-deb',
     config: {
       options: {
-        bin: executableName,
+        bin: pkgName,
+        name: pkgName,
         categories: ['Game'],
         icon: 'src/assets/logo/favicon.png',
       },
@@ -91,7 +92,8 @@ export const makers = [
     name: '@electron-forge/maker-rpm',
     config: {
       options: {
-        bin: executableName,
+        bin: pkgName,
+        name: pkgName,
         categories: ['Game'],
         icon: 'src/assets/logo/favicon.png',
       },
