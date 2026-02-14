@@ -6,7 +6,7 @@ const serverProvider = process.env.VITE_SRCDS_SERVER_PROVIDER ?? '好心人'
 
 test.describe('Home Page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:5173/')
+    await page.goto('/')
   })
 
   test('Check H1 and H3 text', async ({ page }) => {
