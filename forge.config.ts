@@ -13,6 +13,7 @@ function domainToBundleId(domain: string): string {
 
 export const packagerConfig = {
   asar: true,
+  executableName: 'l4d2-server-introduce',
   icon: 'src/assets/logo/favicon',
   appBundleId: utils.fromBuildIdentifier({
     beta: domainToBundleId(serverAddr) + '.beta',
