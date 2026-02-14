@@ -102,7 +102,7 @@ export const publishers = [
       draft: true,
       generateReleaseNotes: true,
       repository: {
-        owner: serverProvider,
+        owner: 'SummonHIM',
         name: 'l4d2-server-introduce',
       },
     },

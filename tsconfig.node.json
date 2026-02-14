@@ -7,6 +7,7 @@
     "nightwatch.conf.*",
     "playwright.config.*",
     "eslint.config.*",
+    "forge.config.*",
     "src-electron"
   ],
   "compilerOptions": {
