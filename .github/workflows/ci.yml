@@ -100,6 +100,11 @@ jobs:
           pnpm build
 
       - name: Build electron application
+        env:
+          VITE_SRCDS_SERVER_ADDRESS: ${{ vars.VITE_SRCDS_SERVER_ADDRESS }}
+          VITE_SRCDS_SERVER_NAME: ${{ vars.VITE_SRCDS_SERVER_NAME }}
+          VITE_SRCDS_SERVER_PORT: ${{ vars.VITE_SRCDS_SERVER_PORT }}
+          VITE_SRCDS_SERVER_PROVIDER: ${{ vars.VITE_SRCDS_SERVER_PROVIDER }}
         if: ! startsWith(github.ref, 'refs/tags/')
         run: |
           pnpm make
@@ -108,6 +113,10 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VITE_SRCDS_SERVER_ADDRESS: ${{ vars.VITE_SRCDS_SERVER_ADDRESS }}
+          VITE_SRCDS_SERVER_NAME: ${{ vars.VITE_SRCDS_SERVER_NAME }}
+          VITE_SRCDS_SERVER_PORT: ${{ vars.VITE_SRCDS_SERVER_PORT }}
+          VITE_SRCDS_SERVER_PROVIDER: ${{ vars.VITE_SRCDS_SERVER_PROVIDER }}
         run: |
           pnpm run publish
 
