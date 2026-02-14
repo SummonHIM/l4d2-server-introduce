@@ -13,7 +13,8 @@ function domainToBundleId(domain: string): string {
 
 export const packagerConfig = {
   asar: true,
-  executableName: 'l4d2-server-introduce',
+  executableName:
+    serverProvider == 'SummonHIM' ? 'summonl4d2-server-launcher' : 'l4d2-server-introduce',
   icon: 'src/assets/logo/favicon',
   appBundleId: utils.fromBuildIdentifier({
     beta: domainToBundleId(serverAddr) + '.beta',
@@ -101,7 +102,7 @@ export const publishers = [
       draft: true,
       generateReleaseNotes: true,
       repository: {
-        owner: 'SummonHIM',
+        owner: serverProvider,
         name: 'l4d2-server-introduce',
       },
     },

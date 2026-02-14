@@ -63,7 +63,7 @@ function createWindow(): void {
       saveImageAs: '图片另存为…',
       saveVideo: '保存视频',
       saveVideoAs: '视频另存为…',
-      copyLink: '复制链接',
+      copyLink: '复制链接地址',
       saveLinkAs: '链接另存为…',
       copyImage: '复制图片',
       copyImageAddress: '复制图片地址',
