@@ -1,7 +1,4 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
-name: Node.js CI
+name: CI
 
 on:
   push:
@@ -11,15 +8,11 @@ on:
     branches: ["main"]
 
 jobs:
-  build:
+  build_web:
     runs-on: ubuntu-latest
-    environment: Actions
+    environment: ci
     permissions:
       contents: write
-    strategy:
-      matrix:
-        node-version: [lts/jod]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -27,21 +20,22 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js lts/jod
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
+          node-version: lts/jod
+          cache: pnpm
 
       - name: Install node modules
         run: pnpm install --frozen-lockfile
 
-      - name: Build node project
+      - name: Build static pages
+        env:
+          VITE_SRCDS_SERVER_ADDRESS: ${{ vars.VITE_SRCDS_SERVER_ADDRESS }}
+          VITE_SRCDS_SERVER_NAME: ${{ vars.VITE_SRCDS_SERVER_NAME }}
+          VITE_SRCDS_SERVER_PORT: ${{ vars.VITE_SRCDS_SERVER_PORT }}
+          VITE_SRCDS_SERVER_PROVIDER: ${{ vars.VITE_SRCDS_SERVER_PROVIDER }}
         run: |
-          echo "VITE_SRCDS_SERVER_ADDRESS=${{ secrets.VITE_SRCDS_SERVER_ADDRESS }}" > .env
-          echo "VITE_SRCDS_SERVER_NAME=${{ secrets.VITE_SRCDS_SERVER_NAME }}" >> .env
-          echo "VITE_SRCDS_SERVER_PORT=${{ secrets.VITE_SRCDS_SERVER_PORT }}" >> .env
-          echo "VITE_SRCDS_SERVER_PROVIDER=${{ secrets.VITE_SRCDS_SERVER_PROVIDER }}" >> .env
           pnpm build
 
       - name: Test node project
@@ -63,5 +57,60 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          name: Release ${{ github.ref_name }}
+          draft: true
           files: dist.tar.xz
+          name: Release ${{ github.ref_name }}
+
+  build_electron:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-15-intel
+          - ubuntu-latest
+          - windows-latest
+    runs-on: ${{ matrix.os }}
+    environment: ci
+    permissions:
+      contents: write
+    needs:
+      - build_web
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js lts/jod
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/jod
+          cache: pnpm
+
+      - name: Install node modules
+        run: pnpm install --frozen-lockfile
+
+      - name: Build static pages
+        env:
+          VITE_SRCDS_SERVER_ADDRESS: ${{ vars.VITE_SRCDS_SERVER_ADDRESS }}
+          VITE_SRCDS_SERVER_NAME: ${{ vars.VITE_SRCDS_SERVER_NAME }}
+          VITE_SRCDS_SERVER_PORT: ${{ vars.VITE_SRCDS_SERVER_PORT }}
+          VITE_SRCDS_SERVER_PROVIDER: ${{ vars.VITE_SRCDS_SERVER_PROVIDER }}
+        run: |
+          pnpm build
+
+      - name: Build electron application
+        run: |
+          pnpm make
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: out-${{ matrix.os }}
+          path: out
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          pnpm publish

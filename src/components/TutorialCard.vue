@@ -1,5 +1,5 @@
 <template>
-  <Card class="mb-2">
+  <Card>
     <template #title>
       <slot name="title"></slot>
     </template>
@@ -43,15 +43,6 @@ let viewerInstance: Viewer | null = null
 onMounted(() => {
   if (viewerContainer.value && props.images && props.images.length) {
     viewerInstance = new Viewer(viewerContainer.value, {
-      toolbar: true,
-      navbar: false,
-      title: false,
-      fullscreen: true,
-      movable: true,
-      zoomable: true,
-      scalable: true,
-      loop: true,
-      inline: false,
       url: 'data-original', // 指定点击图片显示原图
     })
   }
@@ -65,8 +56,6 @@ watch(
       if (viewerContainer.value && newImages && newImages.length) {
         viewerInstance = new Viewer(viewerContainer.value, {
           url: 'data-original',
-          toolbar: true,
-          navbar: false,
         })
       }
     }

@@ -45,3 +45,4 @@ playwright-report/
 
 # Editor
 .vscode
+out/

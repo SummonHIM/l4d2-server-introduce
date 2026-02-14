@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen flex flex-col">
-    <div class="flex-1 mx-auto pt-8 pb-8 max-w-[95%] sm:max-w-[90%] md:max-w-[85%] lg:max-w-[70%]">
+    <div class="flex-1 mx-auto pt-8 pb-8 container">
       <GlobalToolbar v-model="menuSelected" :buttons="menuItems" class="mb-2" />
 
       <TutorialCard class="mb-2" :images="galleriaECImages">
@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 import { useToast } from 'primevue/usetoast'
 
@@ -68,6 +68,8 @@ defineOptions({
 })
 
 const toast = useToast()
+const serverProvider = import.meta.env.VITE_SRCDS_SERVER_PROVIDER ?? '好心人'
+const serverName = import.meta.env.VITE_SRCDS_SERVER_NAME ?? 'Left 4 Dead 2'
 const serverAddr = import.meta.env.VITE_SRCDS_SERVER_ADDRESS ?? 'example.com'
 const serverPort = import.meta.env.VITE_SRCDS_SERVER_PORT ?? '27015'
 const consoleConnectCommand = ref(`connect ${serverAddr}:${serverPort}`)
@@ -95,12 +97,12 @@ const menuSelected = ref<GlobalTabbarButtonProps>(
 // 启用控制台教程图像
 const galleriaECImages = ref([
   {
-    alt: 'Enable Console tips 1',
+    alt: 'Enable Console Tips 1',
     itemImageSrc: IMGEnableConsole1,
     thumbnailImageSrc: IMGThumbEnableConsole1,
   },
   {
-    alt: 'Enable Console tips 2',
+    alt: 'Enable Console Tips 2',
     itemImageSrc: IMGEnableConsole2,
     thumbnailImageSrc: IMGThumbEnableConsole2,
   },
@@ -114,4 +116,8 @@ const galleriaCVCImages = ref([
     thumbnailImageSrc: IMGThumbConnectViaConsole,
   },
 ])
+
+onMounted(async () => {
+  document.title = `手动连接 - 由 ${serverProvider} 提供的 ${serverName} 服务器`
+})
 </script>

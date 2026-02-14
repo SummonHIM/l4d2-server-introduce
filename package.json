@@ -1,10 +1,18 @@
 {
   "name": "l4d2-server-introduce",
+  "productName": "SummonHIM's L4D2 Server Launcher",
+  "description": "A simple page to quickly connect to SummonHIM's Left 4 Dead 2 server.",
   "version": "0.0.0",
+  "author": {
+    "email": "summonhim@qq.com",
+    "name": "SummonHIM",
+    "url": "https://www.summonhim.top"
+  },
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:electron": "cross-env NODE_ENV=development concurrently -k \"vite\" \"wait-on http://localhost:5173 && electron-forge start\"",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "test:e2e": "playwright test",
@@ -13,30 +21,52 @@
     "lint": "run-s lint:*",
     "lint:oxlint": "oxlint . --fix",
     "lint:eslint": "eslint . --fix --cache",
-    "format": "prettier --write --experimental-cli src/"
+    "format": "prettier --write --experimental-cli src/",
+    "make": "electron-forge make",
+    "package": "electron-forge package",
+    "publish": "electron-forge publish",
+    "start": "run-p type-check \"build-only {@}\" -- && electron-forge start"
   },
+  "main": "src-electron/main.ts",
   "dependencies": {
     "@primeuix/themes": "^2.0.3",
     "@tailwindcss/vite": "^4.1.18",
     "axios": "^1.13.5",
+    "electron-squirrel-startup": "^1.0.1",
+    "electron-store": "^11.0.2",
     "pinia": "^3.0.4",
     "pinia-plugin-persistedstate": "^4.7.1",
     "primeicons": "^7.0.0",
     "primevue": "^4.5.4",
     "tailwindcss": "^4.1.18",
+    "update-electron-app": "^3.1.2",
     "viewerjs": "^1.11.7",
     "vue": "^3.5.27",
     "vue-router": "^5.0.1"
   },
   "devDependencies": {
+    "@electron-forge/cli": "^7.11.1",
+    "@electron-forge/maker-deb": "^7.11.1",
+    "@electron-forge/maker-dmg": "^7.11.1",
+    "@electron-forge/maker-rpm": "^7.11.1",
+    "@electron-forge/maker-squirrel": "^7.11.1",
+    "@electron-forge/maker-zip": "^7.11.1",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.11.1",
+    "@electron-forge/plugin-fuses": "^7.11.1",
+    "@electron-forge/publisher-github": "^7.11.1",
+    "@electron/fuses": "^1.8.0",
     "@playwright/test": "^1.58.1",
     "@primevue/auto-import-resolver": "^4.5.4",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@tsconfig/node24": "^24.0.4",
+    "@types/electron-squirrel-startup": "^1.0.2",
     "@types/node": "^24.10.9",
     "@vitejs/plugin-vue": "^6.0.3",
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/tsconfig": "^0.8.1",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "electron": "^40.4.1",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-oxlint": "~1.42.0",
@@ -51,7 +81,8 @@
     "vite": "^7.3.1",
     "vite-plugin-pages": "^0.33.3",
     "vite-plugin-vue-devtools": "^8.0.5",
-    "vue-tsc": "^3.2.4"
+    "vue-tsc": "^3.2.4",
+    "wait-on": "^9.0.4"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"

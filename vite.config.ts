@@ -19,6 +19,7 @@ export default defineConfig({
     Pages(),
     tailwindcss(),
   ],
+  base: './',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
