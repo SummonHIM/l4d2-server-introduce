@@ -31,10 +31,6 @@
 
     <Dialog v-model:visible="steamConnectDialog" modal header="正在连接到服务器…">
       <p>如果没有任何反应，请确认已安装并登录 Steam 客户端。</p>
-
-      <template #footer>
-        <Button label="关闭" severity="secondary" @click="steamConnectDialog = false" autofocus />
-      </template>
     </Dialog>
 
     <footer>
