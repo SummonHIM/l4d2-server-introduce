@@ -50,7 +50,6 @@ import { AxiosError } from 'axios'
 import { useToast } from 'primevue'
 
 import FavIcon from '@/assets/logo/favicon.png'
-import GlobalFooter from '@/components/GlobalFooter.vue'
 import { DNSError, getDNSStatusMessage, resolveHostToIPv4 } from '@/dns'
 
 enum BtnConnectStatus {
@@ -139,15 +138,26 @@ const buttonConfig: ComputedRef<ButtonConfig> = computed(() => {
  * 生成Steam服务器连接的渐进式连接
  * @param address 地址
  * @param port 端口
+ * @param password 密码
  */
-async function generateSteamBrowserProtocol(address: string, port: string): Promise<string> {
+async function generateSteamBrowserProtocol(
+  address: string,
+  port?: string,
+  password?: string,
+): Promise<string> {
   const ip = await resolveHostToIPv4(address)
 
-  if (!port) {
-    return `steam://connect/${ip}`
+  let url = `steam://connect/${ip}`
+
+  if (port) {
+    url += `:${port}`
   }
 
-  return `steam://connect/${ip}:${port}`
+  if (password) {
+    url += `/${encodeURIComponent(password)}`
+  }
+
+  return url
 }
 
 /**
