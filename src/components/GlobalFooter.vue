@@ -1,6 +1,11 @@
 <template>
   <div v-bind="$attrs" class="mx-1 mt-1 mb-1 text-center">
-    <p>© {{ currentYear }} {{ srcdsEnv.provider }}</p>
+    <p>
+      © {{ currentYear }} {{ srcdsEnv.provider }} |
+      <a class="underline" href="https://github.com/SummonHIM/l4d2-server-introduce" target="_blank"
+        >Source Code</a
+      >
+    </p>
     <p class="font-thin text-xs">
       Left 4 Dead 2 and related assets are trademarks and/or copyrights of Valve Corporation. This
       project is not affiliated with or endorsed by Valve.
