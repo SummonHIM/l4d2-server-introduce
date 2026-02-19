@@ -11,6 +11,7 @@ import App from './App.vue'
 import './assets/style/index.css'
 import { zhCNPrime } from './locale'
 import router from './router'
+import { srcdsEnv } from './srcds'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -43,5 +44,7 @@ app.use(PrimeVue, {
   locale: zhCNPrime,
 })
 app.use(ToastService)
+
+document.title = `由 ${srcdsEnv.provider} 提供的 ${srcdsEnv.name} 服务器`
 
 app.mount('#app')

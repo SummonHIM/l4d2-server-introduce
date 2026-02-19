@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 
 import { useToast } from 'primevue/usetoast'
 
@@ -61,6 +61,7 @@ import IMGThumbConnectViaConsole from '@/assets/images/thumb_connect_via_console
 import IMGThumbEnableConsole1 from '@/assets/images/thumb_enable_console_1.png'
 import IMGThumbEnableConsole2 from '@/assets/images/thumb_enable_console_2.png'
 import type { GlobalTabbarButtonProps } from '@/components/GlobalToolbar.vue'
+import { srcdsEnv } from '@/srcds'
 import { copy } from '@/utils'
 
 defineOptions({
@@ -68,11 +69,7 @@ defineOptions({
 })
 
 const toast = useToast()
-const serverProvider = import.meta.env.VITE_SRCDS_SERVER_PROVIDER ?? '好心人'
-const serverName = import.meta.env.VITE_SRCDS_SERVER_NAME ?? 'Left 4 Dead 2'
-const serverAddr = import.meta.env.VITE_SRCDS_SERVER_ADDRESS ?? 'example.com'
-const serverPort = import.meta.env.VITE_SRCDS_SERVER_PORT ?? '27015'
-const consoleConnectCommand = ref(`connect ${serverAddr}:${serverPort}`)
+const consoleConnectCommand = ref(`connect ${srcdsEnv.addr}:${srcdsEnv.port}`)
 
 // 返回菜单
 const menuItems: GlobalTabbarButtonProps[] = [
@@ -116,8 +113,4 @@ const galleriaCVCImages = ref([
     thumbnailImageSrc: IMGThumbConnectViaConsole,
   },
 ])
-
-onMounted(async () => {
-  document.title = `手动连接 - 由 ${serverProvider} 提供的 ${serverName} 服务器`
-})
 </script>

@@ -3,8 +3,8 @@
     <div class="flex-1 flex flex-col items-center justify-center">
       <Image :src="FavIcon" alt="FavIcon" width="256" height="256" />
 
-      <h3>由 {{ serverProvider }} 提供的</h3>
-      <h1 class="text-4xl">{{ serverName }} 服务器</h1>
+      <h3>由 {{ srcdsEnv.provider }} 提供的</h3>
+      <h1 class="text-4xl">{{ srcdsEnv.name }} 服务器</h1>
 
       <div class="mt-6">
         <Button
@@ -46,7 +46,8 @@ import { AxiosError } from 'axios'
 import { useToast } from 'primevue'
 
 import FavIcon from '@/assets/logo/favicon.png'
-import { DNSError, getDNSStatusMessage, resolveHostToIPv4 } from '@/dns'
+import { DNSError, getDNSStatusMessage } from '@/dns'
+import { generateSteamBrowserProtocol, srcdsEnv } from '@/srcds'
 
 enum BtnConnectStatus {
   ERROR = 1,
@@ -67,24 +68,17 @@ defineOptions({
   name: 'HomePage',
 })
 
-// 消息
 const toast = useToast()
 const protocol = window.location.protocol
 
-// 环境变量
-const serverProvider = import.meta.env.VITE_SRCDS_SERVER_PROVIDER ?? '好心人'
-const serverName = import.meta.env.VITE_SRCDS_SERVER_NAME ?? 'Left 4 Dead 2'
-const serverAddr = import.meta.env.VITE_SRCDS_SERVER_ADDRESS ?? 'example.com'
-const serverPort = import.meta.env.VITE_SRCDS_SERVER_PORT ?? '27015'
-
 // APP 下载链接
-const appDownUrl = `https://github.com/${/^[A-Za-z]+$/.test(serverProvider) ? serverProvider : 'GitHub'}/l4d2-server-introduce/releases/latest`
+const appDownUrl = `https://github.com/${srcdsEnv.provider ?? 'GitHub'}/l4d2-server-introduce/releases/latest`
 
-// 服务器连接协议链接
+// 服务器连接渐进式链接
 const steamConnectLink: Ref<BtnConnectStatus | string> = ref(BtnConnectStatus.RESOLVING)
 const steamConnectDialog = ref(false)
 
-// 按钮样式
+// 服务器连接按钮样式
 const buttonConfig: ComputedRef<ButtonConfig> = computed(() => {
   if (typeof steamConnectLink.value === 'string') {
     return {
@@ -131,38 +125,12 @@ const buttonConfig: ComputedRef<ButtonConfig> = computed(() => {
 })
 
 /**
- * 生成Steam服务器连接的渐进式连接
- * @param address 地址
- * @param port 端口
- * @param password 密码
- */
-async function generateSteamBrowserProtocol(
-  address: string,
-  port?: string,
-  password?: string,
-): Promise<string> {
-  const ip = await resolveHostToIPv4(address)
-
-  let url = `steam://connect/${ip}`
-
-  if (port) {
-    url += `:${port}`
-  }
-
-  if (password) {
-    url += `/${encodeURIComponent(password)}`
-  }
-
-  return url
-}
-
-/**
  * 刷新渐进式连接
  */
 async function refreshSteamConnectLink() {
   try {
     steamConnectLink.value = BtnConnectStatus.RESOLVING
-    steamConnectLink.value = await generateSteamBrowserProtocol(serverAddr, serverPort)
+    steamConnectLink.value = await generateSteamBrowserProtocol(srcdsEnv.addr, srcdsEnv.port)
   } catch (error) {
     switch (true) {
       case error instanceof DNSError:
@@ -203,7 +171,7 @@ async function refreshSteamConnectLink() {
 }
 
 /**
- * 运行服务器连接协议链接
+ * 跳转到服务器连接渐进式链接
  */
 function launchSteamConnectLink() {
   if (typeof steamConnectLink.value !== 'string') return
@@ -218,6 +186,5 @@ function launchSteamConnectLink() {
 
 onMounted(async () => {
   refreshSteamConnectLink()
-  document.title = `由 ${serverProvider} 提供的 ${serverName} 服务器`
 })
 </script>
