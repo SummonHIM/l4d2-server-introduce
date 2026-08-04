@@ -19,7 +19,7 @@
         />
       </div>
 
-      <div class="font-thin text-xs">
+      <div class="font-light text-xs">
         <router-link class="underline" to="/manual">手动连接</router-link>
 
         <template v-if="protocol === 'http:' || protocol === 'https:'">
