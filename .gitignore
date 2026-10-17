@@ -17,6 +17,7 @@ coverage
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 .idea
 *.suo
 *.ntvs*
@@ -43,5 +44,4 @@ test-results/
 playwright-report/
 
 # Editor
-.vscode
 out/
