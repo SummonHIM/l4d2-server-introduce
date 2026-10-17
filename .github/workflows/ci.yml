@@ -117,9 +117,11 @@ jobs:
           VITE_SRCDS_SERVER_NAME: ${{ vars.VITE_SRCDS_SERVER_NAME }}
           VITE_SRCDS_SERVER_PORT: ${{ vars.VITE_SRCDS_SERVER_PORT }}
           VITE_SRCDS_SERVER_PROVIDER: ${{ vars.VITE_SRCDS_SERVER_PROVIDER }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         with:
           tagName: ${{ github.ref_name }}
           releaseName: "Release ${{ github.ref_name }}"
           releaseBody: "See the assets to download."
           releaseDraft: true
-          prerelease: false
+          prerelease: ${{ contains(github.ref_name, '-') }}
