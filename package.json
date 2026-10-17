@@ -23,6 +23,7 @@
     "lint:oxlint": "oxlint . --fix",
     "lint:eslint": "eslint . --fix --cache",
     "format": "prettier --write --experimental-cli src/",
+    "sync:version": "node scripts/sync-version.mjs",
     "tauri": "tauri"
   },
   "dependencies": {
