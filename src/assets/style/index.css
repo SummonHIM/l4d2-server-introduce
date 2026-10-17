@@ -1,0 +1,62 @@
+@import 'tailwindcss';
+@import 'primeicons/primeicons.css';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-display: 'Anton', 'Impact', 'Arial Narrow', sans-serif;
+  --color-blood: #c8102e;
+  --color-blood-dark: #8b1024;
+  --color-bone: #d8d3c5;
+  --color-rot: #b34d1e;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #0d0d0d;
+  color: #e5e5e5;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    'PingFang SC',
+    'Microsoft YaHei',
+    sans-serif;
+}
+
+/* 噪点 + 扫描线 + 暗角背景层 */
+.zombie-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0.9) 100%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.16) 0px,
+      rgba(0, 0, 0, 0.16) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.32'/%3E%3C/svg%3E"),
+    #0d0d0d;
+}
+
+code {
+  @apply bg-white/10 text-blood px-1.5 rounded font-mono text-[0.92em];
+}
+
+pre code {
+  @apply bg-black/60 text-bone p-4 rounded block overflow-x-auto;
+}
