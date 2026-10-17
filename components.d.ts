@@ -14,6 +14,7 @@ declare module 'vue' {
     Button: typeof import('primevue/button')['default']
     Dialog: typeof import('primevue/dialog')['default']
     GlobalFooter: typeof import('./src/components/GlobalFooter.vue')['default']
+    Image: typeof import('primevue/image')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Toast: typeof import('primevue/toast')['default']

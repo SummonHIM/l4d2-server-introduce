@@ -20,7 +20,7 @@ test.describe('Home Page', () => {
   })
 
   test('Check logo and L4D2 badge visible', async ({ page }) => {
-    await expect(page.locator('img[alt="Server Logo"]')).toBeVisible()
+    await expect(page.locator('img[alt="SummonHIM Logo"]')).toBeVisible()
     await expect(page.locator('img[alt="Left 4 Dead 2"]')).toBeVisible()
   })
 

@@ -23,6 +23,24 @@
           <li>在主菜单中，单击<code>选项</code>→<code>键盘/鼠标</code>，进入键盘/鼠标设置页面。</li>
           <li>将<code>允许使用开发者控制台</code>设置为<code>已启用</code>。</li>
         </ol>
+
+        <div class="mt-4 flex flex-wrap gap-4">
+          <Image
+            v-for="img in enableConsoleImages"
+            :key="img.itemImageSrc"
+            :src="img.itemImageSrc"
+            :alt="img.alt"
+            preview
+          >
+            <template #image>
+              <img
+                :src="img.thumbnailImageSrc"
+                :alt="img.alt"
+                class="cursor-pointer max-w-56 rounded-md border border-white/10 bg-black/40 shadow-lg transition-transform hover:scale-105"
+              />
+            </template>
+          </Image>
+        </div>
       </section>
 
       <section class="mb-6 rounded-lg border border-white/10 bg-black/40 p-6">
@@ -53,6 +71,24 @@
           <li>按下打开控制台的按键<code>`~`</code>（标点和波浪线）打开控制台。</li>
           <li>将以上进服命令复制到控制台输入框中，并按下回车。</li>
         </ol>
+
+        <div class="mt-4 flex flex-wrap gap-4">
+          <Image
+            v-for="img in connectViaConsoleImages"
+            :key="img.itemImageSrc"
+            :src="img.itemImageSrc"
+            :alt="img.alt"
+            preview
+          >
+            <template #image>
+              <img
+                :src="img.thumbnailImageSrc"
+                :alt="img.alt"
+                class="cursor-pointer max-w-56 rounded-md border border-white/10 bg-black/40 shadow-lg transition-transform hover:scale-105"
+              />
+            </template>
+          </Image>
+        </div>
       </section>
     </div>
 
@@ -67,6 +103,12 @@ import { ref } from 'vue'
 
 import { useToast } from 'primevue/usetoast'
 
+import IMGConnectViaConsole from '@/assets/images/connect_via_console.png'
+import IMGEnableConsole1 from '@/assets/images/enable_console_1.png'
+import IMGEnableConsole2 from '@/assets/images/enable_console_2.png'
+import IMGThumbConnectViaConsole from '@/assets/images/thumb_connect_via_console.png'
+import IMGThumbEnableConsole1 from '@/assets/images/thumb_enable_console_1.png'
+import IMGThumbEnableConsole2 from '@/assets/images/thumb_enable_console_2.png'
 import { srcdsEnv } from '@/srcds'
 import { copy } from '@/utils'
 
@@ -76,4 +118,25 @@ defineOptions({
 
 const toast = useToast()
 const consoleConnectCommand = ref(`connect ${srcdsEnv.addr}:${srcdsEnv.port}`)
+
+const enableConsoleImages = [
+  {
+    alt: '启用控制台提示 1',
+    itemImageSrc: IMGEnableConsole1,
+    thumbnailImageSrc: IMGThumbEnableConsole1,
+  },
+  {
+    alt: '启用控制台提示 2',
+    itemImageSrc: IMGEnableConsole2,
+    thumbnailImageSrc: IMGThumbEnableConsole2,
+  },
+]
+
+const connectViaConsoleImages = [
+  {
+    alt: '通过控制台连接',
+    itemImageSrc: IMGConnectViaConsole,
+    thumbnailImageSrc: IMGThumbConnectViaConsole,
+  },
+]
 </script>

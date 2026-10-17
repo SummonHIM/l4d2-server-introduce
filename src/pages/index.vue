@@ -4,11 +4,15 @@
   <div class="relative min-h-screen w-full flex flex-col items-center justify-center">
     <div class="flex-1 flex flex-col items-center justify-center px-6 py-12 text-center">
       <div class="relative">
-        <img :src="ServerLogo" alt="Server Logo" class="h-44 w-44 md:h-64 md:w-64 select-none" />
+        <img
+          :src="SummonHimLogo"
+          alt="SummonHIM Logo"
+          class="h-44 w-44 md:h-64 md:w-64 select-none drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]"
+        />
         <img
           :src="L4D2Badge"
           alt="Left 4 Dead 2"
-          class="absolute -right-4 -top-4 h-14 w-14 md:h-20 md:w-20 rounded-md border-2 border-black/60 shadow-lg"
+          class="absolute -right-4 -top-4 h-14 w-14 md:h-20 md:w-20 rounded-md shadow-lg"
         />
       </div>
 
@@ -18,7 +22,11 @@
       >
         LEFT 4 DEAD 2
       </h1>
-      <p class="mt-3 text-xl text-bone/80">服务器</p>
+      <p
+        class="font-black mt-4 text-4xl md:text-6xl tracking-[0.3em] text-blood drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]"
+      >
+        服务器
+      </p>
 
       <div class="mt-10">
         <Button
@@ -70,7 +78,7 @@ import { AxiosError } from 'axios'
 import { useToast } from 'primevue'
 
 import L4D2Badge from '@/assets/logo/l4d2-badge.png'
-import ServerLogo from '@/assets/logo/server-logo.svg'
+import SummonHimLogo from '@/assets/logo/summonhim.svg'
 import { DNSError, getDNSStatusMessage } from '@/dns'
 import { generateSteamBrowserProtocol, srcdsEnv } from '@/srcds'
 import { isTauri, openExternal, openSteamConnect } from '@/tauri'
