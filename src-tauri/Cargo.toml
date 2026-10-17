@@ -1,6 +1,6 @@
 [package]
 name = "summonl4d2-server-launcher"
-version = "2.0.0-beta.1"
+version = "2.0.1"
 description = "A simple page to quickly connect to SummonHIM's Left 4 Dead 2 server."
 authors = ["SummonHIM"]
 edition = "2021"
