@@ -1,0 +1,98 @@
+import axios from 'axios'
+
+export enum DNSStatus {
+  NOERROR = 0, // 正常
+  FORMERR = 1, // 格式错误
+  SERVFAIL = 2, // 服务器失败
+  NXDOMAIN = 3, // 域名不存在
+  NOTIMP = 4, // 不支持的查询类型
+  REFUSED = 5, // 被拒绝
+}
+
+export interface DNSQuestion {
+  name: string
+  type: number
+}
+
+export interface DNSAnswer {
+  name: string
+  type: number
+  TTL: number
+  data: string
+}
+
+export interface APIDNS {
+  Status: DNSStatus
+  TC: boolean
+  RD: boolean
+  RA: boolean
+  AD: boolean
+  CD: boolean
+  Question: DNSQuestion[]
+  Answer?: DNSAnswer[]
+  Authority?: DNSAnswer[]
+  Comment?: string
+}
+
+export class DNSError extends Error {
+  public readonly status?: DNSStatus
+  public readonly host?: string
+
+  constructor(options: { message: string; status?: DNSStatus; host?: string }) {
+    super(options.message)
+    this.name = 'DNSError'
+    this.status = options.status
+    this.host = options.host
+    Object.setPrototypeOf(this, DNSError.prototype)
+  }
+}
+
+export function getDNSStatusMessage(status: DNSStatus | undefined): string {
+  switch (status) {
+    case DNSStatus.NOERROR:
+      return '解析成功'
+    case DNSStatus.NXDOMAIN:
+      return '域名不存在'
+    case DNSStatus.SERVFAIL:
+      return 'DNS服务器失败'
+    case DNSStatus.REFUSED:
+      return 'DNS请求被拒绝'
+    default:
+      return '未知DNS错误'
+  }
+}
+
+export function isIPv4(address: string): boolean {
+  const ipv4Regex = /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$/
+  return ipv4Regex.test(address)
+}
+
+export async function resolveHostToIPv4(host: string): Promise<string> {
+  if (isIPv4(host)) return host
+
+  const res = await axios.get<APIDNS>(`https://dns.alidns.com/resolve?name=${host}&type=A`, {
+    headers: { Accept: 'application/dns-json' },
+    timeout: 5000,
+  })
+  const data = res.data
+
+  if (data.Status !== DNSStatus.NOERROR) {
+    throw new DNSError({
+      message: `DNS error: ${DNSStatus[data.Status]}`,
+      host,
+      status: data.Status,
+    })
+  }
+
+  if (!data.Answer?.length) {
+    throw new DNSError({ message: 'No DNS answer record', host })
+  }
+
+  const record = data.Answer.find((r) => r.type === 1)
+
+  if (!record) {
+    throw new DNSError({ message: 'No A record found', host })
+  }
+
+  return record.data
+}
