@@ -4,7 +4,8 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .setup(|app| {
             #[cfg(desktop)]
-            app.handle()
+            let _ = app
+                .handle()
                 .plugin(tauri_plugin_window_state::Builder::default().build());
             Ok(())
         })
